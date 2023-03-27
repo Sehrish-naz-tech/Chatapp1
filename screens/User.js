@@ -40,7 +40,7 @@ const Users = (props) => {
         loadlocation()
         let unsub = loadData()
          return ()=> unsub
-    }, [])
+    }, []);
 
     const loadData = async () => {
         let weather = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=Lahore&appid=e14824332c835ff80bccd41173063f81&units=metric')
@@ -102,7 +102,7 @@ const Users = (props) => {
         //         console.log(error)
         //     }
         // }
-    
+       
     
        
     const onUserSelected = (selectedUserEmail) => {
