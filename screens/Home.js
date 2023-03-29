@@ -1,14 +1,10 @@
 import { getAuth } from 'firebase/auth';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import {
-  View, Text, Button, Image, TextInput,
-  StyleSheet, FlatList,
-} from 'react-native';
+import {View, Text, Button, Image, TextInput,StyleSheet, FlatList,} from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import firebase from '../config/firebase';
-import { addDoc, collection, getFirestore, serverTimestamp, getDocs, 
-  onSnapshot, query, orderBy } from 'firebase/firestore';
+import { addDoc, collection, getFirestore, serverTimestamp, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { async } from '@firebase/util';
 
 const Home = (props) => { 
@@ -26,12 +22,15 @@ const Home = (props) => {
       let chat = [];
       querySnapshot.forEach((doc) => {
         chat.push(doc.data());
-        console.log(doc.data()) });
-      
-      setData(chat)
+        //console.log(doc.data())
+       });
+       setData(chat)
+      //console.log(chat)
+      //console.log(collectionName)
     });
+    
    return unsubscribe
-  }
+  };
   useEffect(() => {
     loadData()
   return ()=> unsubscribe()
@@ -44,6 +43,7 @@ const Home = (props) => {
           msgFrom: getAuth().currentUser.email,
           time: serverTimestamp()
         })
+        console.log(collectionName)
       setMessage(null)
     } catch (error) {
       alert(error.message)
@@ -73,8 +73,7 @@ const Home = (props) => {
                 borderRadius: 20,
               }}>
               <Text style={{ fontWeight: 'bold' }}>{
-                getAuth().currentUser.email == item.msgFrom ?
-                  'you' : item.msgFrom}</Text>
+                getAuth().currentUser.email == item.msgFrom ? 'you' : item.msgFrom}</Text>
               <Text>{item.msg}</Text>
               {item.time ?
                 <Text style={{ fontSize: 8 }}> {item.time.toDate().toUTCString()}

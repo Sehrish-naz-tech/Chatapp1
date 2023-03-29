@@ -89,7 +89,7 @@ function Login(props) {
           Notifications.removeNotificationSubscription(responseListener.current);
         }; */
 
-   }, [password, email,])
+   }, [password, email])
 
    const onLoginPressed= () => {
     const auth = getAuth()

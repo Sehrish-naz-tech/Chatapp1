@@ -71,6 +71,7 @@ function Signup(props) {
         age,
         address,
         location,
+        email,
     })
     // .then call when function successfuly done e.g Signed in 
     const user = userCredential.user;

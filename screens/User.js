@@ -12,7 +12,7 @@ import * as Location from 'expo-location';
 
 const Users = (props) => {
     const [users, setUsers] = useState([])
-    const [temp, setTemp] = useState("")
+    //const [temp, setTemp] = useState("")
     const [location, setLocation] = useState(null);
 
 
@@ -36,23 +36,21 @@ const Users = (props) => {
     }, [])
     
       
-    useEffect(()=> {
-        loadlocation()
-        let unsub = loadData()
-         return ()=> unsub
-    }, []);
+    
 
     const loadData = async () => {
-        let weather = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=Lahore&appid=e14824332c835ff80bccd41173063f81&units=metric')
-        console.log(weather.data)
-        setTemp(weather.data.main.temp)
+        // let weather = await axios.get('https://api.openweathermap.org/data/2.5/weather?q=Lahore&appid=e14824332c835ff80bccd41173063f81&units=metric')
+        // console.log(weather.data)
+        // setTemp(weather.data.main.temp)
 
        
         const q = query(collection(db, "Users"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const users = [];
           querySnapshot.forEach((doc) => {
-              users.push(doc.data());
+            users.push({ ...doc.data(), email: doc.id })
+              //users.push(doc.data());
+              //console.log(doc.data())
           });
           
         setUsers(users);
@@ -73,6 +71,13 @@ const Users = (props) => {
         setUsers(users) */
         
     }
+
+    useEffect(()=> {
+        loadlocation()
+        let unsub = loadData()
+         return ()=> unsub
+    }, []);
+
 
     const loadlocation = async () => {
         Location.watchPositionAsync(
@@ -105,21 +110,20 @@ const Users = (props) => {
        
     
        
-    const onUserSelected = (selectedUserEmail) => {
-        let array = [getAuth().currentUser.email, selectedUserEmail]
+    const onUserSelected = (selecteduser) => {
+        let array = [getAuth().currentUser.email, selecteduser]
         array.sort()
         let key = array[0] + '_' + array[1]
-        props.navigation.navigate('Home', { collectionName: key })
+        props.navigation.navigate('Home', { collectionName:key })
     }
 
     return (
         <View style={styles.container}>
-            <Text>{`Lahore Temprature is: ${temp}`}</Text>
+            {/* <Text>{`Lahore Temperature is: ${temp}`}</Text> */}
             <FlatList
                 data={users}
-                renderItem={({ item }) => {
-                    return (
-                        
+                renderItem={({item}) => {
+                    return  (
                             <TouchableOpacity style={{
                                 backgroundColor: '#d3d3d3',
                                 height: 200,
@@ -136,7 +140,7 @@ const Users = (props) => {
                                 {item.location ?
                                     <MapView
                                         style={styles.map}
-                                        //provider={'google'}
+                                        provider={'google'}
                                         showsMyLocationButton={true}
                                         showsUserLocation={true}
                                     >
@@ -145,8 +149,8 @@ const Users = (props) => {
                                                 latitude: item.location.coords.latitude,
                                                 longitude: item.location.coords.longitude,
                                             }}
-                                              title = {` ${item.firstName}'s Location`}
-                                            //title='Marker'
+                                              //title = {`${item.firstName}'s Location`}
+                                            title='Marker'
                                         />
                                     </MapView>
                                     : null}

@@ -7,7 +7,7 @@ import Signup from './screens/Signup';
 import Forget from './screens/Forget';
 import Home from './screens/Home';
 import Users from './screens/User';
-import Maps from './screens/Maps';
+// import Maps from './screens/Maps';
 
 //import firebase from '../config/firebase'
 
@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator();
         <Stack.Screen name="Forget" component={Forget} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="User" component={Users} />
-        <Stack.Screen name="Maps" component={Maps} />
+        {/* <Stack.Screen name="Maps" component={Maps} /> */}
 
       </Stack.Navigator>
     </NavigationContainer>

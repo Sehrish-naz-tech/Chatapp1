@@ -34,7 +34,7 @@ return(
     <View style={styles.container}>
     <MapView
             style={styles.map}
-            //provider={'google'}
+            provider={'google'}
             showsMyLocationButton={true}
             showsUserLocation={true}
             >
